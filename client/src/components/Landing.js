@@ -36,6 +36,11 @@ const Landing = () => {
                             Join Game
                         </button>
                     </Link>
+                    <Link to='/lobby'>
+                        <button type='submit' className='btn'>
+                            Create Room
+                        </button>
+                    </Link>
                 </form>
             </main>
         </div>

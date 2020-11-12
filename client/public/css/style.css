@@ -68,6 +68,7 @@ a {
     color: #fff;
     padding: 20px 20px 60px;
     overflow-y: scroll;
+    text-align: center;
 }
 
 .chat-sidebar h2 {
@@ -178,7 +179,7 @@ a {
     width: 100%;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 200px) {
     .chat-main {
         display: block;
     }
