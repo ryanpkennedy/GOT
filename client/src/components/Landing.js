@@ -1,7 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { register } from '../actions/auth';
+import PropTypes from 'prop-types';
 
-const Landing = () => {
+const Landing = ({ register, isAuthenticated }) => {
+    const [formData, setFormData] = useState({
+        name: '',
+        room: '',
+    });
+
+    const { name, room } = formData;
+
+    const onChange = (e) =>
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        register({ name, room });
+    };
+
+    if (isAuthenticated) {
+        return <Redirect to='/lobby' />;
+    }
+
     return (
         <div className='join-container'>
             <header className='join-header'>
@@ -10,32 +32,32 @@ const Landing = () => {
                 </h1>
             </header>
             <main className='join-main'>
-                <form>
+                <form onSubmit={(e) => onSubmit(e)}>
                     <div className='form-control'>
-                        <label for='username'>Username</label>
+                        <label htmlFor='name'>Username</label>
                         <input
                             type='text'
-                            name='username'
-                            id='username'
+                            name='name'
+                            value={name}
+                            id='userid'
                             placeholder='Enter username...'
+                            onChange={(e) => onChange(e)}
                             required
                         />
                     </div>
                     <div className='form-control'>
-                        <label for='room'>Room</label>
+                        <label htmlFor='room'>Room</label>
                         <input
                             type='text'
-                            name='username'
-                            id='username'
+                            name='room'
+                            value={room}
+                            id='roomid'
                             placeholder='Enter roomcode...'
+                            onChange={(e) => onChange(e)}
                             required
                         />
                     </div>
-                    <Link to='/lobby'>
-                        <button type='submit' className='btn'>
-                            Join Game
-                        </button>
-                    </Link>
+                    <input type='submit' className='btn' value='Join Game' />
                     <Link to='/lobby'>
                         <button type='submit' className='btn'>
                             Create Room
@@ -47,4 +69,13 @@ const Landing = () => {
     );
 };
 
-export default Landing;
+Landing.propTypes = {
+    register: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { register })(Landing);
