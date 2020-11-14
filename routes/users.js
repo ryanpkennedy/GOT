@@ -28,6 +28,15 @@ router.post(
                     .json({ errors: [{ msg: 'User already exists' }] });
             }
 
+            users = await User.find({});
+            pNum = users.length;
+
+            if (pNum === 3) {
+                return res
+                    .status(400)
+                    .json({ errors: [{ msg: 'Room is full' }] });
+            }
+
             user = new User({
                 name,
                 room,

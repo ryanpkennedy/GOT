@@ -2,10 +2,12 @@ import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import store from './store';
 import Landing from './components/Landing';
 import Lobby from './components/Lobby';
+import Navbar from './components/Navbar';
+import Alert from './components/Alert';
 import setAuthToken from './utils/setAuthToken';
+import store from './store';
 
 if (localStorage.token) {
     setAuthToken(localStorage.token);
@@ -16,9 +18,10 @@ function App() {
         <Provider store={store}>
             <Fragment>
                 <Router>
+                    <Navbar />
                     <Route exact path='/' component={Landing} />
                     <section className='container'>
-                        {/* <Alert /> */}
+                        <Alert />
                         <Switch>
                             <Route exact path='/lobby' component={Lobby} />
                         </Switch>

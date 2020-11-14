@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { register } from '../actions/auth';
 import PropTypes from 'prop-types';
+import { setAlert } from '../actions/alert';
 
 const Landing = ({ register, isAuthenticated }) => {
     const [formData, setFormData] = useState({
@@ -26,11 +27,6 @@ const Landing = ({ register, isAuthenticated }) => {
 
     return (
         <div className='join-container'>
-            <header className='join-header'>
-                <h1>
-                    <i className='fas fa-smile'></i> Game of Things
-                </h1>
-            </header>
             <main className='join-main'>
                 <form onSubmit={(e) => onSubmit(e)}>
                     <div className='form-control'>
@@ -70,6 +66,7 @@ const Landing = ({ register, isAuthenticated }) => {
 };
 
 Landing.propTypes = {
+    setAlert: PropTypes.func.isRequired,
     register: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool,
 };
@@ -78,4 +75,4 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { register })(Landing);
+export default connect(mapStateToProps, { setAlert, register })(Landing);
